@@ -1,0 +1,115 @@
+basePath: /api/v1
+definitions:
+  main.DownloadFileResult:
+    properties:
+      base64Content:
+        type: string
+      contentType:
+        type: string
+      error:
+        type: string
+      fileSize:
+        type: integer
+      humanError:
+        type: string
+    type: object
+  main.UploadFileInput:
+    properties:
+      base64Content:
+        type: string
+      bucketName:
+        type: string
+      contentType:
+        type: string
+      filename:
+        type: string
+      filesize:
+        type: integer
+    type: object
+  main.UploadFileResult:
+    properties:
+      error:
+        type: string
+      etag:
+        type: string
+      humanError:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /minio/file:
+    get:
+      consumes:
+      - application/json
+      description: get document by bucket and filename
+      parameters:
+      - description: Filename
+        in: query
+        name: Filename
+        required: true
+        type: string
+      - description: BucketName
+        in: query
+        name: BucketName
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.DownloadFileResult'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/main.DownloadFileResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.DownloadFileResult'
+      summary: get document
+      tags:
+      - minio
+    post:
+      consumes:
+      - application/json
+      description: get document by bucket and filename
+      parameters:
+      - description: upload file
+        in: body
+        name: filedata
+        required: true
+        schema:
+          $ref: '#/definitions/main.UploadFileInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.UploadFileResult'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/main.UploadFileResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.UploadFileResult'
+      summary: get document
+      tags:
+      - minio
+swagger: "2.0"
